@@ -6,13 +6,13 @@ const twilio = require('twilio');
 const isCronJob = false; // Make it `true` if want to run as cron job. If it is true then next config is important to set the frequency time.
 const frequencyTimeInMs = 10 * 60 * 1000; // time in Milliseconds. Default value is: 10 min.
 //===== Whatsapp integration: Twilio config.
-const accountSid = '*****';
-const authToken = '*****';
-const fromNumber = 'whatsapp:+11111111111'; //twilio sandbox number
-const toNumber = 'whatsapp:+911111111111'; // number where to send the notification
+const accountSid = process.env.ACCOUNT_SID;
+const authToken = process.env.AUTHTOKEN;
+const fromNumber = process.env.FROM_NUMBER; //twilio sandbox number
+const toNumber = process.env.TO_NUMBER; // number where to send the notification
 //===== CoWin API's Config
 const filterAgeGroup = 18; // Enum: 18,45
-const districtId = 581; // district id. Refer id from data/district.json
+const districtId = 670; // district id. Refer id from data/district.json
 const qtyMinThershould = 5; // alert when min slot capacity is available.
 const curDate = moment().format("DD-MM-YYYY");
 const uri = `https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=${districtId}&date=${curDate}`;
@@ -81,6 +81,7 @@ const script = async function() {
 }
 
 if(isCronJob) {
+    (script)();
     setInterval(script, frequencyTimeInMs);
 } else {
     (script)();
